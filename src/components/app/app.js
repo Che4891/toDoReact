@@ -18,6 +18,8 @@ class App extends Component {
         { name: "Carl W.", salary: 5000, increase: false, rise: false, id: 3 },
         { name: "Eva I", salary: 6000, increase: false, rise: false, id: 4 },
       ],
+      term: "",
+      checkHandler: "",
     };
   }
   addItem = (e, name, salary) => {
@@ -101,29 +103,57 @@ class App extends Component {
 
     // второй способ через map
     this.setState(({ data }) => ({
-      data: data.map(item => {
+      data: data.map((item) => {
         if (item.id === id) {
           return { ...item, [prop]: !item[prop] };
         }
-        return item
+        return item;
       }),
     }));
   };
 
+  onUpdateSearch = (term) => {
+    this.setState({term})
+  }
 
+  filterPost = (checkHandler) => {
+    this.setState({checkHandler})
+  }
+
+  searchEmp = (items, term) => {
+    if (term.length === 0) {
+      return items;
+    }
+    return items.filter((item) => {
+      return item.name.toUpperCase().indexOf(term.toUpperCase()) > -1; // indexOf ищет ту часть в строке которую я задал в кавычках если находит возврашает индекс елемента если нет то -1
+    });
+  };
+
+  filtersItem = (data, checkHandler) => {
+    switch (checkHandler) {
+      case "chosen":
+        return data.filter((item) => item.rise);
+      case "salary":
+        return data.filter((item) => item.salary >= 1000);
+      default:
+        return data;
+    }
+  };
 
   render() {
-    const employees = this.state.data.length
-    const increased =this.state.data.filter((item) => item.increase).length
+    const { data, term, checkHandler } = this.state;
+    const employees = data.length;
+    const increased = data.filter((item) => item.increase).length;
+    const visibleData = this.filtersItem(this.searchEmp(data, term), checkHandler);
     return (
       <div className="app">
-        <AppInfo employees={employees} increased={increased}/>
+        <AppInfo employees={employees} increased={increased} />
         <div className="search-panel">
-          <SearchPanel/>
-          <AppFilter />
+          <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+          <AppFilter filterPost={this.filterPost} />
         </div>
         <EmployeesList
-          data={this.state.data}
+          data={visibleData}
           onDelete={this.deleteItem}
           onToggleProp={this.onToggleProp}
         />

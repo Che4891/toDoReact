@@ -1,20 +1,29 @@
 import './app-filter.css'
+import { Component } from 'react'
 
-const AppFilter = () => {
-    return (
-        <div className="btn-group">
-            <button className='btn btn-light' type='button'>
-                Все сотрудники
-            </button>
 
-            <button className='btn btn-outline-light' type='button'>
-                сотрудники на повишение
-            </button>
+class AppFilter extends Component{
+    filterPost = (e) => {
+       const checkHandler = e.currentTarget.getAttribute('data-toggle')
+       this.props.filterPost(checkHandler)
+    }
 
-            <button className='btn btn-outline-light' type='button'>
-                ЗП больше 1000$
-            </button>
-        </div>
-    )
+    render () {
+        return (
+            <div className="btn-group">
+                <button className='btn btn-light' data-toggle="all" type='button' onClick={this.filterPost}>
+                    Все сотрудники
+                </button>
+    
+                <button className='btn btn-outline-light' data-toggle="chosen" type='button' onClick={this.filterPost}>
+                    сотрудники на повишение
+                </button>
+    
+                <button className='btn btn-outline-light' data-toggle="salary" type='button' onClick={this.filterPost}>
+                    ЗП больше 1000$
+                </button>
+            </div>
+        )
+    }
 }
 export default AppFilter
