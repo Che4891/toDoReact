@@ -19,7 +19,7 @@ class App extends Component {
         { name: "Eva I", salary: 6000, increase: false, rise: false, id: 4 },
       ],
       term: "",
-      checkHandler: "",
+      filters: "all",
     };
   }
   addItem = (e, name, salary) => {
@@ -116,8 +116,8 @@ class App extends Component {
     this.setState({term})
   }
 
-  filterPost = (checkHandler) => {
-    this.setState({checkHandler})
+  filterPost = (filters) => {
+    this.setState({filters})
   }
 
   searchEmp = (items, term) => {
@@ -129,8 +129,8 @@ class App extends Component {
     });
   };
 
-  filtersItem = (data, checkHandler) => {
-    switch (checkHandler) {
+  filtersItem = (data, filters) => {
+    switch (filters) {
       case "chosen":
         return data.filter((item) => item.rise);
       case "salary":
@@ -141,16 +141,16 @@ class App extends Component {
   };
 
   render() {
-    const { data, term, checkHandler } = this.state;
+    const { data, term, filters } = this.state;
     const employees = data.length;
     const increased = data.filter((item) => item.increase).length;
-    const visibleData = this.filtersItem(this.searchEmp(data, term), checkHandler);
+    const visibleData = this.filtersItem(this.searchEmp(data, term), filters);
     return (
       <div className="app">
         <AppInfo employees={employees} increased={increased} />
         <div className="search-panel">
           <SearchPanel onUpdateSearch={this.onUpdateSearch} />
-          <AppFilter filterPost={this.filterPost} />
+          <AppFilter filters={filters} filterPost={this.filterPost} />
         </div>
         <EmployeesList
           data={visibleData}

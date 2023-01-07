@@ -1,29 +1,27 @@
 import './app-filter.css'
-import { Component } from 'react'
 
+//Пример реалтзации компонента через переменные
 
-class AppFilter extends Component{
-    filterPost = (e) => {
-       const checkHandler = e.currentTarget.getAttribute('data-toggle')
-       this.props.filterPost(checkHandler)
-    }
+const AppFilter = (props) => {
+    const buttonData = [
+        {name: 'all', label: 'Все сотрудники'},
+        {name: 'chosen', label: 'Cотрудники на повишение'},
+        {name: 'salary', label: 'ЗП больше 1000$'}
+    ]
+    const button = buttonData.map(({name, label}) => {
+        const active = props.filters === name;
+        const clazz = active ? 'btn-light' : 'btn-outline-light'
+       return (
+        <button className={`btn ${clazz}`} key={name} type='button' onClick={() => props.filterPost(name)}>
+        {label}
+</button>
+       )
+    })
 
-    render () {
-        return (
+    return (
             <div className="btn-group">
-                <button className='btn btn-light' data-toggle="all" type='button' onClick={this.filterPost}>
-                    Все сотрудники
-                </button>
-    
-                <button className='btn btn-outline-light' data-toggle="chosen" type='button' onClick={this.filterPost}>
-                    сотрудники на повишение
-                </button>
-    
-                <button className='btn btn-outline-light' data-toggle="salary" type='button' onClick={this.filterPost}>
-                    ЗП больше 1000$
-                </button>
+                {button}
             </div>
-        )
-    }
+    )
 }
 export default AppFilter
