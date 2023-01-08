@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "./employees-add-form.css";
+import "./employees-add-form.scss";
 
 class EmployersAddForm extends Component {
   constructor (props) {
@@ -40,7 +40,7 @@ class EmployersAddForm extends Component {
           />
 
           <button type="submit" onClick={(e) => addItem(e, name, salary)} className="btn btn-outline-light">
-            Добавить ==
+            Добавить
           </button>
         </form>
       </div>

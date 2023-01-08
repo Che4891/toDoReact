@@ -16,7 +16,8 @@ const Employeeslistitem = (props) => {
 
   return (
     <li className={className}>
-      <span onClick={onToggleProp} data-toggle="rise" className="list-group-item-label">
+      {/* пример инлайнових стилей в реакте */}
+      <span style={{color: '#003351', fontSize: 24}} onClick={onToggleProp} data-toggle="rise" className="list-group-item-label">
         {name}
       </span>
       <input
